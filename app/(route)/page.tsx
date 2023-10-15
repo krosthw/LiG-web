@@ -5,9 +5,7 @@ const HomePage = () => {
     return (
         <Container>
             <div className="space-y-10 pb-1\0"></div>
-            <Billboard >
-
-            </Billboard>
+            <Billboard data={null}/>
         </Container>
     );
 }
