@@ -10,7 +10,7 @@ import NavBarActions from "@/components/navbar-actions";
 const NavBar = async () => {
   //const categories = await getCategories();
 
-  const categories:Category[] = [{id: "Libri", name: "Libri", billboard: null}, {id: "Scatoloni", name: "Scatoloni", billboard: null}];
+  const categories:Category[] = [{id: "Libri", name: "Libri"}, {id: "Scatoloni", name: "Scatoloni"}];
 
   return ( 
     <div className="border-b">

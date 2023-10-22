@@ -15,5 +15,39 @@ model Libri {
   id Bytes @id @default(auto()) @map("_id") @db.ObjectId 
   titolo String
   autore String
+  garage String
+  genere Int
+  anno Int
+  prezzo Float
+  validato Boolean
   urlImage String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  cart ShoppingCart[] @relation("CartToLibri")
+  scatoloni Scatoloni[] @relation("ScatoloniToLibri")
+
+}
+
+model Scatoloni{
+  id Bytes @id @default(auto()) @map("_id") @db.ObjectId 
+  nome String
+  libriId Bytes[] @db.ObjectId 
+  libri Libri @relation("ScatoloniToLibri", fields: [libriId], references: [id])
+
+}
+
+model ShoppingCart{
+  id Bytes @id @default(auto()) @map("_id") @db.ObjectId 
+  userId Bytes @db.ObjectId 
+  user User @relation("ShoppingToUser", fields: [userId], references: [id])
+  scatoloneId Bytes
+  libriId Bytes[] @db.ObjectId 
+  libri Libri @relation("CartToLibri", fields: [libriId], references: [id])
+}
+
+model User{
+  id Bytes @id @default(auto()) @map("_id") @db.ObjectId 
+  nickname String
+  email String
+  cart ShoppingCart[] @relation("ShoppingToUser")
 }
