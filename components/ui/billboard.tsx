@@ -1,21 +1,42 @@
 
-import { Billboard as BillboardType } from "@/types";
-
+import Image from "next/image";
 import bg from '@/assets/images/bookDemo.jpg'
 import prismadb from "@/lib/prismadb";
 
+import { promises as fs, read } from 'fs';
 
 //image credits 
 
 interface BillboardProps {
-  data: BillboardType | null;
+  data: null;
 }
 
-const Billboard:React.FC<BillboardProps> = async (
+const Billboard: React.FC<BillboardProps> = async (
   data
 ) => {
+
+  var file = "D:/Documents/LiG/libri/io_robot.jpg";
+  const reader = await fs.readFile(file, 'base64');
+
+  //console.log('Encoded Base 64 File String:', reader);
+  /******************* for Binary ***********************/
+  //var dataq = reader.split(',')[1];
+  //var binaryBlob = atob(dataq);
+  var binaryBlob = atob(reader);
+  //console.log('Encoded Binary File String:', binaryBlob);
+
   const libri = await prismadb.libri.findMany();
-  var renderedOutput = libri.map(item => <div key={item.autore}> {item.autore} </div>);
+
+  var renderedOutput = libri.map(item =>
+    <div key={item.autore}>
+      <div key={item.autore}>
+        <Image src={`data:image/jpeg;base64,${btoa(binaryBlob)}`} alt="aaa" width="200" height="200" />
+      </div>
+      <div key={item.autore}>
+        {item.autore}
+      </div>
+    </div>
+  );
 
   return (
 
@@ -25,11 +46,12 @@ const Billboard:React.FC<BillboardProps> = async (
           <div className="font-bold text-3xl sm:text-5xl lg:text-6xl sm:max-w-xl max-w-xs text-white">
             Libreriamo i Garages
           </div>
-          
+
         </div>
-        <div>
-          {renderedOutput}
-          </div>
+
+      </div>
+      <div>
+        {renderedOutput}
       </div>
     </div>
   );

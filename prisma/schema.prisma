@@ -19,13 +19,14 @@ model Libri {
   genere Int
   anno Int
   prezzo Float
-  validato Boolean
+  validato Boolean?
   urlImage String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  imageBin Bytes 
   cart ShoppingCart[] @relation("CartToLibri")
   scatoloni Scatoloni[] @relation("ScatoloniToLibri")
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Scatoloni{
@@ -33,6 +34,9 @@ model Scatoloni{
   nome String
   libriId Bytes[] @db.ObjectId 
   libri Libri @relation("ScatoloniToLibri", fields: [libriId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
 }
 
@@ -43,6 +47,9 @@ model ShoppingCart{
   scatoloneId Bytes
   libriId Bytes[] @db.ObjectId 
   libri Libri @relation("CartToLibri", fields: [libriId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model User{
@@ -50,4 +57,7 @@ model User{
   nickname String
   email String
   cart ShoppingCart[] @relation("ShoppingToUser")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
