@@ -10,18 +10,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model LibriSimple {
+  id Bytes @id @default(auto()) @map("_id") @db.ObjectId 
+  titolo String
+  autore String
+  
+  urlImage String?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
 
 model Libri {
   id Bytes @id @default(auto()) @map("_id") @db.ObjectId 
   titolo String
   autore String
-  garage String
-  genere Int
-  anno Int
-  prezzo Float
+  garage Int?
+  genere Int?
+  anno Int?
+  prezzo Float?
   validato Boolean?
-  urlImage String?
-  imageBin Bytes 
+  urlImageBase64 String?
   cart ShoppingCart[] @relation("CartToLibri")
   scatoloni Scatoloni[] @relation("ScatoloniToLibri")
 
